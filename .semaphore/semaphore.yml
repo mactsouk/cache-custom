@@ -1,26 +1,19 @@
 version: v1.0
-name: First pipeline example
+name: Download and cache custom file
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 
 blocks:
-  - name: "Build"
+  - name: Download and Cache
     task:
-      env_vars:
-        - name: APP_ENV
-          value: prod
       jobs:
-      - name: Docker build
+      - name: Download and Cache .deb
         commands:
           - checkout
-          - ls -1
-          - echo $APP_ENV
-          - echo "Docker build..."
-          - echo "done"
 
-  - name: "Smoke tests"
+  - name: Reuse from cache 1
     task:
       jobs:
       - name: Smoke
@@ -28,36 +21,18 @@ blocks:
           - checkout
           - echo "make smoke"
 
-  - name: "Unit tests"
+  - name: Reuse from cache 2
     task:
       jobs:
       - name: RSpec
         commands:
           - checkout
-          - echo "make rspec"
 
       - name: Lint code
         commands:
           - checkout
-          - echo "make lint"
 
       - name: Check security
         commands:
           - checkout
-          - echo "make security"
 
-  - name: "Integration tests"
-    task:
-      jobs:
-      - name: Cucumber
-        commands:
-          - checkout
-          - echo "make cucumber"
-
-  - name: "Push Image"
-    task:
-      jobs:
-      - name: Push
-        commands:
-          - checkout
-          - echo "make docker.push"
