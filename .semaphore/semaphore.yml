@@ -5,36 +5,32 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 
+
 blocks:
   - name: Download and Cache
     task:
       jobs:
-      - name: Download and Cache .deb
-        commands:
-          - checkout
-          - wget
-          - cache store $(checksum file.deb)
+        - name: Download and Cache .deb
+          commands:
+            - checkout
+            - echo wget
+            - cache store $(checksum file.deb)
 
-  - name: Reuse from cache 1
+  - name: Reuse from cache
     task:
       prologue:
-      commands:
-          - checkout
-          - cache restore $(checksum file.deb)
-      jobs:
-      - name: Smoke
-        commands:
-          - checkout
-
-  - name: Reuse from cache 2
-    task:
-      jobs:
-      - name: RSpec
         commands:
           - checkout
           - cache restore $(checksum file.deb)
 
-      - name: Check security
-        commands:
-          - checkout
+      jobs:
+        - name: Reuse Job 1
+          commands:
+            - echo "job 1"
+        - name: Reuse Job 2
+          commands:
+            - echo "job 2"
+        - name: Reuse Job 3
+          commands:
+            - echo "job 3"
 
