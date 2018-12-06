@@ -12,14 +12,19 @@ blocks:
       - name: Download and Cache .deb
         commands:
           - checkout
+          - wget
+          - cache store $(checksum file.deb)
 
   - name: Reuse from cache 1
     task:
+      prologue:
+      commands:
+          - checkout
+          - cache restore $(checksum file.deb)
       jobs:
       - name: Smoke
         commands:
           - checkout
-          - echo "make smoke"
 
   - name: Reuse from cache 2
     task:
@@ -27,10 +32,7 @@ blocks:
       - name: RSpec
         commands:
           - checkout
-
-      - name: Lint code
-        commands:
-          - checkout
+          - cache restore $(checksum file.deb)
 
       - name: Check security
         commands:
