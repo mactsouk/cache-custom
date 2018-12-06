@@ -14,6 +14,7 @@ blocks:
             - checkout
             - cache restore $SEMAPHORE_PROJECT_NAME
             - "[ -d 'packages' ] && echo 'Found' || source ./getDeb.sh"
+            - ls -l packages
 
   - name: Reuse from cache
     task:
