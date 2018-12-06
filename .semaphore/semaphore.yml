@@ -5,7 +5,6 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 
-
 blocks:
   - name: Download and Cache
     task:
@@ -26,12 +25,12 @@ blocks:
           - sudo dpkg -i ./debs/enscript.deb
 
       jobs:
-        - name: ps -ax output
+        - name: ps -ax
           commands:
             - ps -ax > psList
             - enscript -pPSlist.ps psList
             - ls -l
-        - name: two-column ps -ax
+        - name: 2-col ps -ax
           commands:
             - ps -ax > psList
             - enscript -2rG -pPSlist.ps psList
