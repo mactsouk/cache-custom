@@ -1,28 +1,28 @@
 version: v1.0
-name: Download and cache custom file
+name: Cache custom file
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
 
 blocks:
-  - name: Download and Cache
+  - name: Use cache or create
     task:
       jobs:
-        - name: Download and Cache .deb
+        - name: .deb from Cache or create cache
           commands:
             - checkout
             - mkdir debs
-            - wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/e/enscript/enscript_1.6.5.90-3_amd64.deb -O ./debs/enscript.deb
-            - cache store $SEMAPHORE_WORKFLOW_ID debs
+            - cache restore $SEMAPHORE_PROJECT_NAME
+          - "[ -d $SEMAPHORE_PROJECT_NAME ] && echo 'Found' || source ./getDeb.sh"
 
   - name: Reuse from cache
     task:
       prologue:
         commands:
           - checkout
-          - cache restore $SEMAPHORE_WORKFLOW_ID
-          - sudo dpkg -i ./debs/enscript.deb
+          - cache restore $SEMAPHORE_PROJECT_NAME
+          - sudo dpkg -i ./$SEMAPHORE_PROJECT_NAME/enscript.deb
 
       jobs:
         - name: ps -ax
