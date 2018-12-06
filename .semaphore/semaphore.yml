@@ -14,7 +14,7 @@ blocks:
             - checkout
             - mkdir debs
             - cache restore $SEMAPHORE_PROJECT_NAME
-          - "[ -d $SEMAPHORE_PROJECT_NAME ] && echo 'Found' || source ./getDeb.sh"
+          - "[ -d '$SEMAPHORE_PROJECT_NAME' ] && echo 'Found' || source ./getDeb.sh"
 
   - name: Reuse from cache
     task:
