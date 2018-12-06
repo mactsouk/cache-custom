@@ -13,7 +13,7 @@ blocks:
           commands:
             - checkout
             - cache restore $SEMAPHORE_PROJECT_NAME
-            - "[ -d '$SEMAPHORE_PROJECT_NAME' ] && echo 'Found' || source ./getDeb.sh"
+            - "[ -d packages ] && echo 'Found' || source ./getDeb.sh"
 
   - name: Reuse from cache
     task:
@@ -21,7 +21,7 @@ blocks:
         commands:
           - checkout
           - cache restore $SEMAPHORE_PROJECT_NAME
-          - sudo dpkg -i ./$SEMAPHORE_PROJECT_NAME/enscript.deb
+          - sudo dpkg -i ./packages/enscript.deb
 
       jobs:
         - name: ps -ax
