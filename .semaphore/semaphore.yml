@@ -23,7 +23,7 @@ blocks:
         commands:
           - checkout
           - cache restore $SEMAPHORE_WORKFLOW_ID
-          - sudo apt install ./deb/enscript.deb
+          - sudo dpkg -i ./deb/enscript.deb
 
       jobs:
         - name: Reuse Job 1
