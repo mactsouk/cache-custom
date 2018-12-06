@@ -15,14 +15,14 @@ blocks:
             - checkout
             - mkdir debs
             - wget http://ge.archive.ubuntu.com/ubuntu/pool/universe/e/enscript/enscript_1.6.5.90-3_amd64.deb -O ./debs/enscript.deb
-            - cache store $(checksum enscript.deb) debs
+            - cache store $SEMAPHORE_WORKFLOW_ID debs
 
   - name: Reuse from cache
     task:
       prologue:
         commands:
           - checkout
-          - cache restore $(checksum file.deb)
+          - cache restore $SEMAPHORE_WORKFLOW_ID
           - sudo apt install ./deb/enscript.deb
 
       jobs:
