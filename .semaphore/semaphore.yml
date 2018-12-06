@@ -13,7 +13,7 @@ blocks:
           commands:
             - checkout
             - cache restore $SEMAPHORE_PROJECT_NAME
-            - "[ -d packages ] && echo 'Found' || source ./getDeb.sh"
+            - "[ -d 'packages' ] && echo 'Found' || source ./getDeb.sh"
 
   - name: Reuse from cache
     task:
