@@ -12,7 +12,6 @@ blocks:
         - name: .deb from Cache or create cache
           commands:
             - checkout
-            - mkdir debs
             - cache restore $SEMAPHORE_PROJECT_NAME
             - "[ -d '$SEMAPHORE_PROJECT_NAME' ] && echo 'Found' || source ./getDeb.sh"
 
